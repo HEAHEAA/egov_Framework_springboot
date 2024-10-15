@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jh.www.imgmanage.user.mapper.UserMapper">
+    <resultMap id="menuSelectMap" type="Menu">
+        <result property="id"		column="menu_id"		jdbcType="VARCHAR"/>
+        <result property="ptId"		column="menu_pt_id"		jdbcType="VARCHAR"/>
+        <result property="type"		column="menu_type"		jdbcType="VARCHAR"/>
+        <result property="text"		column="menu_text"		jdbcType="VARCHAR"/>
+        <result property="url"		column="menu_url"		jdbcType="VARCHAR"/>
+        <result property="icon"		column="menu_icon_url"		jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getUserForLogin" parameterType="User" resultType="User">
+        select sys_op_user_class_id, user_name, a.user_id,
+               user_part, user_grade, user_phone, user_email,
+               user_image, user_status, refresh_token
+        from
+            (
+                SELECT sys_op_user_class_id, user_name, user_id,
+                       user_pwd, user_part, user_grade, user_phone, user_email,
+                       user_image, user_remark, user_reg_date, user_status
+                FROM did_busantp.dt_op_user
+                WHERE user_status = 1 AND user_id = #{user_id}
+                  AND user_pwd = #{user_pwd}) as a
+                left join did_busantp.oauth_token
+                          on a.user_id = oauth_token.user_id
+    </select>
+
+    <select id="validRefreshToken" parameterType="String" resultType="String">
+        select refresh_token
+        from did_busantp.oauth_token
+        where user_id = #{user_id}
+    </select>
+
+    <select id="getUserPw" parameterType="String" resultType="String">
+        select user_pwd from did_busantp.dt_op_user where user_id = #{id}
+    </select>
+
+    <update id="updateRefreshToken" parameterType="Token">
+        insert into did_busantp.oauth_token (user_id,refresh_token)
+        values (#{user_id},#{refresh_token})
+        on conflict (user_id)
+            do update
+            set  refresh_token= #{refresh_token}
+    </update>
+
+    <select id="getUser" parameterType="String" resultType="User">
+        SELECT t1.sys_op_user_class_id, user_name, user_id,
+               user_pwd, user_part, user_grade, user_phone, user_email,
+               user_image, user_remark, user_reg_date, user_status,
+               t2.sys_net_class_name
+        FROM did_busantp.DT_OP_USER t1 left outer join did_busantp.SYS_OP_USER_CLASS t2
+                                           ON t1.sys_op_user_class_id = t2.sys_op_user_class_id
+        WHERE user_id = #{id}
+    </select>
+
+    <insert id="insertUser" parameterType="User">
+        INSERT INTO did_busantp.DT_OP_USER
+        (
+            sys_op_user_class_id, user_name, user_id,
+            user_pwd,
+            user_reg_date, user_status
+        )
+        VALUES
+            (
+                2, #{user_name}, #{user_id},
+                #{user_pwd},
+                to_char(now(),'yyyy-MM-dd hh24:mi:ss')::timestamp, 2
+            )
+    </insert>
+
+</mapper>
