@@ -69,4 +69,26 @@
             )
     </insert>
 
+
+    <select id="selectUserList" resultType="User" parameterType="PageModel">
+        select
+        TOTAL.row_number,
+        TOTAL.dt_op_user_id,
+        TOTAL.sys_op_user_class_id,
+        TOTAL.user_name,
+        TOTAL.user_id,
+        TOTAL.user_grade,
+        TOTAL.user_phone,
+        case when TOTAL.user_status =1 then '사용' else '미사용' end user_status_nm,
+        TOTAL.user_status,
+        (select count(*) as total_row from dt_op_user)
+        from
+        (SELECT row_number() over (ORDER BY dt_op_user_id desc), *
+        FROM dt_op_user
+        ORDER BY USER_STATUS DESC
+        ) AS TOTAL
+        <if test="start != null and start != -1 and end != -1">
+            OFFSET CAST(#{start} as INTEGER) LIMIT CAST(#{end} as INTEGER)
+        </if>
+    </select>
 </mapper>

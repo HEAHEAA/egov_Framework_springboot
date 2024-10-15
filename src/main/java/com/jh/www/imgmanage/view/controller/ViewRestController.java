@@ -73,7 +73,7 @@ public class ViewRestController {
         if(jwtTokenProvider.validateToken(Access_token)){
             Token token = new Token();
             token.setUser_id(jwtTokenProvider.getUserPk(Access_token));
-            token.setRefresh_token("log out");
+            token.setRefresh_token("logout");
             userService.updateRefreshToken(token);
             result.setData("expired refresh_token");
             result.setSuccess(true);

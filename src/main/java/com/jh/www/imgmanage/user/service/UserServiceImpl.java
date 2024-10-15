@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -70,5 +71,26 @@ public class UserServiceImpl implements UserService {
         }
         return user;
     }
+
+
+    @Override
+    public List<User> selectUserList(PageModel pageModel) {
+        if(pageModel.getCurrentPage() != 0){
+            int page = pageModel.getCurrentPage();
+            int pageElement = pageModel.getCurrentElement();
+            if(page == 1){
+                pageModel.setStart(0);
+                pageModel.setEnd(pageElement);
+            }else{
+                pageModel.setStart(page*pageElement+1);
+                pageModel.setEnd(page*pageElement+pageElement);
+            }
+            return userMapper.selectUserList(pageModel);
+        }else{
+            return userMapper.selectUserList(pageModel);
+        }
+
+    }
+
 }
 
