@@ -2,7 +2,6 @@ package com.jh.www.imgmanage.view.controller;
 
 import com.jh.www.imgmanage.config.egovconfig.JwtTokenProvider;
 import com.jh.www.imgmanage.domain.*;
-import com.jh.www.imgmanage.page.service.PageService;
 import com.jh.www.imgmanage.user.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 public class ViewRestController {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
-    @Autowired
-    private PageService pageService;
     @Autowired
     private UserService userService;
 
