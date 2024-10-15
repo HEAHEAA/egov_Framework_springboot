@@ -11,8 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 @Primary
@@ -72,24 +71,38 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    public List<Map<String, Object>> selectAllUser(){
+        List<User> users = userMapper.selectAllUser();
+        List<Map<String, Object>> filteredUsers = new ArrayList<>();
+
+        for (User user : users) {
+            Map<String, Object> filteredUser = new HashMap<>();
+            filteredUser.put("dt_op_user_id", user.getDt_op_user_id());
+            filteredUser.put("sys_op_user_class_id", user.getSys_op_user_class_id());
+            filteredUser.put("user_name", user.getUser_name());
+            filteredUser.put("user_id", user.getUser_id());
+            filteredUser.put("user_status", user.getUser_status());
+            filteredUsers.add(filteredUser);
+        }
+        return filteredUsers;
+    }
 
     @Override
-    public List<User> selectUserList(PageModel pageModel) {
-        if(pageModel.getCurrentPage() != 0){
-            int page = pageModel.getCurrentPage();
-            int pageElement = pageModel.getCurrentElement();
-            if(page == 1){
-                pageModel.setStart(0);
-                pageModel.setEnd(pageElement);
-            }else{
-                pageModel.setStart(page*pageElement+1);
-                pageModel.setEnd(page*pageElement+pageElement);
-            }
-            return userMapper.selectUserList(pageModel);
-        }else{
-            return userMapper.selectUserList(pageModel);
-        }
+    public List<Map<String, Object>> selectByIdUser(String id){
+        List<User> users= userMapper.selectByIdUser(id);
+        List<Map<String, Object>> filteredUsers = new ArrayList<>();
 
+        for (User user : users) {
+            Map<String, Object> filteredUser = new HashMap<>();
+            filteredUser.put("dt_op_user_id", user.getDt_op_user_id());
+            filteredUser.put("sys_op_user_class_id", user.getSys_op_user_class_id());
+            filteredUser.put("user_name", user.getUser_name());
+            filteredUser.put("user_id", user.getUser_id());
+            filteredUser.put("user_status", user.getUser_status());
+            filteredUsers.add(filteredUser);
+        }
+        return filteredUsers;
     }
 
 }

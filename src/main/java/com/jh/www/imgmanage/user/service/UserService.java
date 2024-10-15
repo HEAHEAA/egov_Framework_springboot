@@ -4,6 +4,7 @@ import com.jh.www.imgmanage.domain.*;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserService extends UserDetailsService{
     String validRefreshToken(String user_id);
@@ -12,5 +13,7 @@ public interface UserService extends UserDetailsService{
     User getUser(String id);
     void insertUser(User user);
 
-    List<User> selectUserList(PageModel pageModel);
+    List<Map<String, Object>> selectAllUser();
+
+    List<Map<String, Object>> selectByIdUser(String id);
 }

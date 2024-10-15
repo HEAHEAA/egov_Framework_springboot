@@ -15,8 +15,7 @@ public interface UserMapper {
     String getUserPw(String id);
     void insertUser(User user);
 
-    List<User> selectUserList(PageModel pageModel);
+    List<User> selectAllUser();
 
-
-
+    List<User> selectByIdUser(String id);
 }
