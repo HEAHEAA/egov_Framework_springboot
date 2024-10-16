@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jh.www.imgmanage.file.mapper.FileMapper">
+    <resultMap id="menuSelectMap" type="Menu">
+        <result property="id"		column="menu_id"		jdbcType="VARCHAR"/>
+        <result property="ptId"		column="menu_pt_id"		jdbcType="VARCHAR"/>
+        <result property="type"		column="menu_type"		jdbcType="VARCHAR"/>
+        <result property="text"		column="menu_text"		jdbcType="VARCHAR"/>
+        <result property="url"		column="menu_url"		jdbcType="VARCHAR"/>
+        <result property="icon"		column="menu_icon_url"		jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="fileList" resultType="FileList">
+        select tfm_idx idx,
+               tfm_origin_file_name origin_fileName,
+               tfm_upload_file_name upload_fileName,
+               tfm_reg_date reg_date
+        from
+            did_busantp.tb_file_manage
+    </select>
+
+    <insert id="fileInsert" parameterType="FileManager">
+        insert into did_busantp.tb_file_manage(
+                                               tfm_origin_file_name,
+                                               tfm_upload_file_name,
+                                               tfm_reg_date)
+        values (
+                #{origin_file_name},
+                #{upload_file_name},
+                to_char(now(), 'yyyy-MM-dd hh24:mi:ss')::timestamp
+               )
+    </insert>
+
+
+
+</mapper>

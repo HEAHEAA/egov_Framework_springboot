@@ -2,7 +2,6 @@ package com.jh.www.imgmanage.news.controller;
 
 import com.jh.www.imgmanage.config.egovconfig.JwtTokenProvider;
 import com.jh.www.imgmanage.domain.News;
-import com.jh.www.imgmanage.domain.NewsList;
 import com.jh.www.imgmanage.domain.ResultModel;
 import com.jh.www.imgmanage.news.service.NewsService;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -81,8 +79,5 @@ public class NewsController {
         result.setSuccess(true);
         return result;
     }
-
-
-
 
 }
