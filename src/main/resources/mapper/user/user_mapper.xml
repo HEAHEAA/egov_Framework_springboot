@@ -73,7 +73,7 @@
         select * from did_busantp.dt_op_user;
     </select>
 
-    <select id="selectByIdUser" parameterType="String" resultType="User">
+    <select id="selectByIdUser" parameterType="int" resultType="User">
         select * from did_busantp.dt_op_user
                  where dt_op_user_id = CAST(#{dt_op_user_id} as INTEGER)
     </select>

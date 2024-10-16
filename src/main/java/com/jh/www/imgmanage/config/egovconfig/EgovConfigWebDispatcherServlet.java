@@ -54,10 +54,7 @@ public class EgovConfigWebDispatcherServlet implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(LogInterceptor())
                 .addPathPatterns("/api/**")
-                .excludePathPatterns(
-                        "/api/login","/api/signUp","/api/refresh","/api/log/pageMoved","/api/layout/list/*",
-                        "/api/layout/sensorList/*","/api/layout/foTime/*","/api/witem","/api/newsList/*","/api/did/files",
-                        "/api/playlist","/api/did/list/*","/api/wdata","/api/node/data","/api/node/list");
+                .excludePathPatterns("/api/login","/api/signUp","/api/refresh");
     }
     @Bean
     public LogInterceptor LogInterceptor() {

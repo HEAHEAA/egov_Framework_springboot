@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 
 @Configuration
-@MapperScan(value="com.jh.www.imgmanage", sqlSessionFactoryRef="sqlSession")
+@MapperScan(value="com.jh.www.imgmanage.*.mapper", sqlSessionFactoryRef="sqlSession")
 public class EgovConfigAppDatasource {
 
     @Primary
@@ -29,7 +29,6 @@ public class EgovConfigAppDatasource {
     @Primary
     @Bean(name = {"sqlSession", "egov.sqlSession"})
     public SqlSessionFactoryBean sqlSession(@Qualifier("datasource") DataSource dataSource, ApplicationContext applicationContext) throws IOException {
-
 
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource);

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jh.www.imgmanage.news.mapper.NewsMapper">
+    <resultMap id="menuSelectMap" type="Menu">
+        <result property="id"		column="menu_id"		jdbcType="VARCHAR"/>
+        <result property="ptId"		column="menu_pt_id"		jdbcType="VARCHAR"/>
+        <result property="type"		column="menu_type"		jdbcType="VARCHAR"/>
+        <result property="text"		column="menu_text"		jdbcType="VARCHAR"/>
+        <result property="url"		column="menu_url"		jdbcType="VARCHAR"/>
+        <result property="icon"		column="menu_icon_url"		jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectAllNews" parameterType="String" resultType="NewsList">
+        select
+            news_idx,
+            news_content
+            from did_busantp.did_news where node_id = CAST(#{node_idx} as INTEGER)
+    </select>
+
+    <select id="selectByNewsId" parameterType="String" resultType="NewsList">
+        select
+            news_idx,
+            news_content
+        from did_busantp.did_news where news_idx = CAST(#{news_idx} as INTEGER)
+    </select>
+
+    <insert id="insertNews" parameterType="News">
+        insert into
+            did_busantp.did_news(
+                                 news_content,
+                                 reg_date,
+                                 user_id,
+                                 node_id
+        ) values (#{news_content},
+                  to_char(now(),'yyyy-MM-dd hh24:mi:ss')::timestamp,
+                  #{user_id},
+                  #{node_id})
+    </insert>
+
+    <update id="updateNews" parameterType="map">
+        update did_busantp.did_news set
+                                        news_content = #{news_content},
+                                        mod_id = #{mod_id},
+                                        node_id = #{node_id, jdbcType=VARCHAR},
+                                        update_date = to_char(now(),'yyyy-MM-dd hh24:mi:ss')::timestamp
+        where news_idx = #{news_idx}
+    </update>
+
+    <delete id="deleteNews" parameterType="String">
+        delete from did_busantp.did_news
+        where news_idx = CAST(#{news_idx} as INTEGER)
+    </delete>
+
+</mapper>

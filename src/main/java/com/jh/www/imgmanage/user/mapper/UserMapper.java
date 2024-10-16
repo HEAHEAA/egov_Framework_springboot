@@ -16,6 +16,5 @@ public interface UserMapper {
     void insertUser(User user);
 
     List<User> selectAllUser();
-
     List<User> selectByIdUser(String id);
 }
