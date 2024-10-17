@@ -15,10 +15,19 @@ public class WeatherController {
     @Autowired
     private WeatherService weatherService;
 
-    @GetMapping("data")
+    @GetMapping("item")
     public ResultModel<Object> selectWeatherItems() {
         ResultModel<Object> resultModel = new ResultModel<>();
         resultModel.setData(weatherService.selectWeatherItems());
+        resultModel.setMessage("기상 데이터");
+        resultModel.setSuccess(true);
+        return resultModel;
+    }
+
+    @GetMapping("data")
+    public ResultModel<Object> selectWeatherData() {
+        ResultModel<Object> resultModel = new ResultModel<>();
+        resultModel.setData(weatherService.selectWeatherData());
         resultModel.setMessage("기상 데이터");
         resultModel.setSuccess(true);
         return resultModel;

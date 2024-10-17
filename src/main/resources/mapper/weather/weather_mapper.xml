@@ -7,7 +7,7 @@
         <result property="type"		column="menu_type"		jdbcType="VARCHAR"/>
         <result property="text"		column="menu_text"		jdbcType="VARCHAR"/>
         <result property="url"		column="menu_url"		jdbcType="VARCHAR"/>
-        <result property="icon"		column="menu_icon_url"		jdbcType="VARCHAR"/>
+        <result property="icon"		column="menu_icon_url"	jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id="selectWeatherItems" resultType="WeatherItem">
@@ -21,4 +21,9 @@
             from did_busantp.weather_ncst;
     </select>
 
+    <select id="selectWeatherData" resultType="WeatherData">
+        select
+            so2grade, no2grade, o3grade, cograde, pm10grade, pm25grade, khaigrade, idx, reg_date
+            from did_busantp.airkorea_data order by 1 desc limit 1
+    </select>
 </mapper>
