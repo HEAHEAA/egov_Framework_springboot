@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jh.www.imgmanage.play.mapper.PlayMapper">
+    <resultMap id="menuSelectMap" type="Menu">
+        <result property="id" column="menu_id" jdbcType="VARCHAR"/>
+        <result property="ptId" column="menu_pt_id" jdbcType="VARCHAR"/>
+        <result property="type" column="menu_type" jdbcType="VARCHAR"/>
+        <result property="text" column="menu_text" jdbcType="VARCHAR"/>
+        <result property="url" column="menu_url" jdbcType="VARCHAR"/>
+        <result property="icon" column="menu_icon_url" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="playList" parameterType="int" resultType="Play">
+        select *
+        from (select pm.pm_idx,
+                     pm_start,
+                     pm_end,
+                     pm_reg_date,
+                     COALESCE(string_agg(tfm_origin_file_name, ',')) AS pm_file_name,
+                     COALESCE(string_agg(tfm_upload_file_name, ',')) AS pm_upload_name,
+                     file_list,
+                     running_time,
+                     pm_user_id,
+                     pm_use,
+                     pm_update_date,
+                     node_id
+              from did_busantp.promotion_manage pm
+                       left join
+                   did_busantp.tb_file_manage tfm
+                   on tfm.tfm_idx = any (file_list)
+              group by 1, 2, 3, 4, 7, 8, 9, 10, 11, 12) a
+        where node_id = #{node_id}
+        order by 1 desc;
+    </select>
+
+
+</mapper>
