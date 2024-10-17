@@ -9,6 +9,8 @@ import java.util.List;
 @Mapper
 public interface FileMapper {
     List<FileList> fileList();
+
     int fileInsert (FileManager fileManager);
+    int fileDelete (int tfm_idx);
 
 }

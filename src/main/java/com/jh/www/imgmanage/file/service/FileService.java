@@ -8,4 +8,6 @@ import java.util.List;
 public interface FileService {
     List<FileList> fileList();
     int fileInsert (FileManager fileManager);
+
+    int fileDelete (int tfm_idx);
 }

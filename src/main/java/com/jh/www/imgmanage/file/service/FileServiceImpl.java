@@ -7,11 +7,11 @@ import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.List;
 
 @Service("FileService")
 public class FileServiceImpl extends EgovAbstractServiceImpl implements FileService {
-
     @Autowired
     private FileMapper fileMapper;
 
@@ -25,5 +25,9 @@ public class FileServiceImpl extends EgovAbstractServiceImpl implements FileServ
         return fileMapper.fileInsert(fileManager);
     }
 
+    @Override
+    public int fileDelete(int tfm_idx) {
+        return fileMapper.fileDelete(tfm_idx);
+    }
 
 }

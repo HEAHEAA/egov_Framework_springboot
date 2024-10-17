@@ -31,6 +31,20 @@
                )
     </insert>
 
+    <select id="fileDetail" resultType="FileList" parameterType="int">
+        select tfm_idx idx,
+               tfm_origin_file_name origin_fileName,
+               tfm_upload_file_name upload_fileName,
+               tfm_reg_date reg_date
+        from
+            did_busantp.tb_file_manage
+        where tfm_idx = #{idx}
+    </select>
+
+    <delete id="fileDelete" parameterType="int">
+        delete from did_busantp.tb_file_manage where tfm_idx = #{tfm_idx}
+    </delete>
+
 
 
 </mapper>
