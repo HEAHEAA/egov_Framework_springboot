@@ -33,5 +33,25 @@
         order by 1 desc;
     </select>
 
+    <insert id="playInsert" parameterType="Play">
+        insert into did_busantp.promotion_manage(
+                                                 node_id,
+                                                 pm_reg_date,
+                                                 pm_user_id,
+                                                 file_list,
+                                                 running_time
+        ) values ( #{node_id},
+                  to_char(now(),'yyyy-MM-dd hh24:mi:ss')::timestamp,
+                  #{pm_user_id},
+                  #{file_list}::Integer[],
+                  #{running_time}::Integer[])
+        on conflict (node_id)
+        do update
+        set pm_reg_date =  to_char(now(),'yyyy-MM-dd hh24:mi:ss')::timestamp,
+            pm_user_id = #{pm_user_id},
+            file_list = #{file_list}::Integer[],
+            running_time = #{running_time}::Integer[];
+    </insert>
+
 
 </mapper>

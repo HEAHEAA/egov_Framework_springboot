@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface PlayService {
     List<Play> playList(int node_id);
+    int playInsert(Play play);
 }

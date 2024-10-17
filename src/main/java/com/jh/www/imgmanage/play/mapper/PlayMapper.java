@@ -8,4 +8,6 @@ import java.util.List;
 @Mapper
 public interface PlayMapper {
     List<Play> playList(int node_id);
+    int playInsert(Play play);
+
 }
