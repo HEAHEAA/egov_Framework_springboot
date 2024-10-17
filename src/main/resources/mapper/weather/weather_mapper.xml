@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jh.www.imgmanage.weather.mapper.WeatherMapper">
+    <resultMap id="menuSelectMap" type="Menu">
+        <result property="id"		column="menu_id"		jdbcType="VARCHAR"/>
+        <result property="ptId"		column="menu_pt_id"		jdbcType="VARCHAR"/>
+        <result property="type"		column="menu_type"		jdbcType="VARCHAR"/>
+        <result property="text"		column="menu_text"		jdbcType="VARCHAR"/>
+        <result property="url"		column="menu_url"		jdbcType="VARCHAR"/>
+        <result property="icon"		column="menu_icon_url"		jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectWeatherItems" resultType="WeatherItem">
+        select
+            basedate,
+            basetime,
+            category,
+            fcstdate,
+            fcsttime,
+            fcstvalue
+            from did_busantp.weather_ncst;
+    </select>
+
+</mapper>

@@ -22,13 +22,13 @@ public class PlayServiceImpl implements PlayService{
 
     @Override
     public int playInsert(@RequestBody Play play) {
-        play.setRunning_time(convertListIntegerToString(play.getTime()));
-        play.setFile_list(convertListIntegerToString(play.getFile_idx()));
+        play.setRunning_time(convertListIntegerToString(play.getTime())); //시간 배열
+        play.setFile_list(convertListIntegerToString(play.getFile_idx())); //파일 배열
         int result = playMapper.playInsert(play);
         return result;
     }
 
-
+    //여러 개의 데이터를 배열 형태로 표현
     public static String convertListIntegerToString(List<Integer> data) {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
